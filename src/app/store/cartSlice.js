@@ -28,8 +28,6 @@ const initialState = {
   products: [],
   isLoading: false,
   error: null,
-  isDarkMode: false,
-  fontSize: 16,
 }
 
 // ==========================================
@@ -62,21 +60,6 @@ const cartSlice = createSlice({
     // Cart ko clear karne ka action
     clearCart: (state) => {
       state.cart = []
-    },
-
-    // Theme toggle action
-    toggleTheme: (state) => {
-      state.isDarkMode = !state.isDarkMode
-    },
-
-    // Font size barhane ka action
-    increaseFontSize: (state) => {
-      state.fontSize += 2
-    },
-
-    // Font size kam karne ka action
-    decreaseFontSize: (state) => {
-      state.fontSize -= 2
     },
   },
 
@@ -111,9 +94,6 @@ export const {
   addToCart,
   removeFromCart,
   clearCart,
-  toggleTheme,
-  increaseFontSize,
-  decreaseFontSize,
 } = cartSlice.actions
 
 // Final slice reducer ko export karenge jo store me register hoga
