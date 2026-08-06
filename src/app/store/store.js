@@ -22,7 +22,8 @@ export const store = configureStore({
 if (typeof window !== 'undefined') {
   store.subscribe(() => {
     const state = store.getState()
-    // Jab bhi state change hogi, cart ko local storage me save kar denge
+    // Jab bhi state change hogi, cart aur theme ko local storage me save kar denge
     localStorage.setItem('shopping-cart-storage-redux', JSON.stringify(state.cartStore.cart))
+    localStorage.setItem('theme-storage-redux', state.cartStore.theme)
   })
 }

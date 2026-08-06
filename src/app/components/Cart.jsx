@@ -1,13 +1,14 @@
 'use client'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, clearCart } from '@/app/store/cartSlice'
+import { removeFromCart, clearCart, toggleTheme } from '@/app/store/cartSlice'
 
 export default function Cart() {
   const dispatch = useDispatch()
   
-  // useSelector ke zariye state se cart array get kar rahe hain
+  // useSelector ke zariye state se values read kar rahe hain
   const cart = useSelector((state) => state.cartStore.cart)
+  const theme = useSelector((state) => state.cartStore.theme)
 
   // Total Price calculate kar rahe hain
   const totalPrice = cart.reduce((total, item) => total + item.price, 0)
@@ -62,27 +63,35 @@ export default function Cart() {
       )}
     </div>
 
-    <div className="border border-slate-200 p-5 rounded-2xl bg-white shadow-sm mt-4 flex items-center justify-between transition-all hover:shadow-md">
+    <div className={`border p-5 rounded-2xl shadow-sm mt-4 flex items-center justify-between transition-all hover:shadow-md ${
+      theme === 'dark' ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-800'
+    }`}>
       <div className="flex items-center gap-3">
         {/* Dynamic Icon Container */}
-        <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 transition-colors">
-          {/* Replace with Moon icon/emoji when active */}
-          <span className="text-lg">☀️</span>
+        <div className={`p-2.5 rounded-xl transition-colors ${
+          theme === 'dark' ? 'bg-slate-800 text-yellow-300' : 'bg-amber-50 text-amber-600'
+        }`}>
+          <span className="text-lg">{theme === 'dark' ? '🌙' : '☀️'}</span>
         </div>
         <div>
-          <h3 className="text-sm font-semibold text-slate-800">Theme Mode</h3>
+          <h3 className={`text-sm font-semibold ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>Theme Mode</h3>
           <p className="text-xs text-slate-400">Switch between light and dark look</p>
         </div>
       </div>
 
       {/* Pill Toggle Switch Button */}
       <button 
+        onClick={() => dispatch(toggleTheme())}
         type="button"
-        className="relative inline-flex h-6.5 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-200"
+        className={`relative inline-flex h-6.5 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+          theme === 'dark' ? 'bg-blue-600' : 'bg-slate-200'
+        }`}
       >
         <span className="sr-only">Toggle theme</span>
-        {/* Toggle knob: Translate-x-5 or Translate-x-0 when toggled */}
-        <span onClick={() => {dispatch(toggleTheme())}} className="pointer-events-none inline-block h-5.5 w-5.5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0" />
+        {/* Toggle knob */}
+        <span className={`pointer-events-none inline-block h-5.5 w-5.5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+          theme === 'dark' ? 'translate-x-5.5' : 'translate-x-0'
+        }`} />
       </button>
     </div>
 

@@ -3,7 +3,7 @@
 import { Provider } from 'react-redux'
 import { store } from '@/app/store/store'
 import { useEffect } from 'react'
-import { loadCart } from '@/app/store/cartSlice'
+import { loadCart, setTheme } from '@/app/store/cartSlice'
 
 // ==========================================
 // REDUX PROVIDER WRAPPER FOR NEXT.JS SSR
@@ -14,7 +14,7 @@ import { loadCart } from '@/app/store/cartSlice'
 export function Providers({ children }) {
   // Safe Client-Side Hydration:
   // Next.js me Server-side rendering (SSR) hoti hai jahan 'localStorage' available nahi hota.
-  // Isliye hum render complete hone ke baad 'useEffect' me localStorage se cart load karte hain.
+  // Isliye hum render complete hone ke baad 'useEffect' me localStorage se cart aur theme load karte hain.
   // Is se hydration mismatch error se bach jaate hain jo Next.js me aam hai.
   useEffect(() => {
     const savedCart = localStorage.getItem('shopping-cart-storage-redux')
@@ -24,6 +24,11 @@ export function Providers({ children }) {
       } catch (error) {
         console.error('Error loading cart from localStorage:', error)
       }
+    }
+    
+    const savedTheme = localStorage.getItem('theme-storage-redux')
+    if (savedTheme) {
+      store.dispatch(setTheme(savedTheme))
     }
   }, [])
 

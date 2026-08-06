@@ -32,6 +32,10 @@ const cartSlice = createSlice({
 
     toggleTheme: (state) => {
       state.theme = state.theme === 'light' ? 'dark' : 'light'
+    },
+
+    setTheme: (state, action) => {
+      state.theme = action.payload || 'light'
     }
   },
 })
@@ -43,6 +47,7 @@ export const {
   removeFromCart,
   clearCart,
   toggleTheme,
+  setTheme,
 } = cartSlice.actions
 
 // Final slice reducer ko export karenge jo store me register hoga
