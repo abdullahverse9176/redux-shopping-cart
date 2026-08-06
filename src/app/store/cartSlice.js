@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 // Initial State define karna
 const initialState = {
   cart: [],
-  products: [],
 }
 
 const cartSlice = createSlice({
@@ -29,11 +28,6 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cart = []
     },
-
-    // Products list ko save karne ka action
-    setProducts: (state, action) => {
-      state.products = action.payload
-    },
   },
 })
 
@@ -43,7 +37,6 @@ export const {
   addToCart,
   removeFromCart,
   clearCart,
-  setProducts,
 } = cartSlice.actions
 
 // Final slice reducer ko export karenge jo store me register hoga
