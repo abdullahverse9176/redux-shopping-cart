@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 // Initial State define karna
 const initialState = {
   cart: [],
+  theme: 'light'
 }
 
 const cartSlice = createSlice({
@@ -28,6 +29,10 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.cart = []
     },
+
+    toggleTheme: (state) => {
+      state.theme = state.theme === 'light' ? 'dark' : 'light'
+    }
   },
 })
 
@@ -37,6 +42,7 @@ export const {
   addToCart,
   removeFromCart,
   clearCart,
+  toggleTheme,
 } = cartSlice.actions
 
 // Final slice reducer ko export karenge jo store me register hoga

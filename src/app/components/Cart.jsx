@@ -13,6 +13,7 @@ export default function Cart() {
   const totalPrice = cart.reduce((total, item) => total + item.price, 0)
 
   return (
+    <>
     <div className="border border-emerald-200 p-6 rounded-2xl bg-white shadow-sm">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-slate-800 tracking-tight">Shopping Cart</h2>
@@ -60,5 +61,31 @@ export default function Cart() {
         </>
       )}
     </div>
+
+    <div className="border border-slate-200 p-5 rounded-2xl bg-white shadow-sm mt-4 flex items-center justify-between transition-all hover:shadow-md">
+      <div className="flex items-center gap-3">
+        {/* Dynamic Icon Container */}
+        <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 transition-colors">
+          {/* Replace with Moon icon/emoji when active */}
+          <span className="text-lg">☀️</span>
+        </div>
+        <div>
+          <h3 className="text-sm font-semibold text-slate-800">Theme Mode</h3>
+          <p className="text-xs text-slate-400">Switch between light and dark look</p>
+        </div>
+      </div>
+
+      {/* Pill Toggle Switch Button */}
+      <button 
+        type="button"
+        className="relative inline-flex h-6.5 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none bg-slate-200"
+      >
+        <span className="sr-only">Toggle theme</span>
+        {/* Toggle knob: Translate-x-5 or Translate-x-0 when toggled */}
+        <span onClick={() => {dispatch(toggleTheme())}} className="pointer-events-none inline-block h-5.5 w-5.5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out translate-x-0" />
+      </button>
+    </div>
+
+    </>
   )
 }
