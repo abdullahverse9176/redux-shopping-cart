@@ -1,22 +1,44 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchProducts, addToCart } from '@/app/store/cartSlice'
+import { setProducts, addToCart } from '@/app/store/cartSlice'
 
 export default function ProductList() {
   const dispatch = useDispatch()
   
-  // useSelector ke zariye global store state se data read kar rahe hain
+  // useSelector ke zariye global store state se products read kar rahe hain
   const products = useSelector((state) => state.cartStore.products)
-  const isLoading = useSelector((state) => state.cartStore.isLoading)
+  
+  // Local state for loading and error
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    // Redux me thunk action ko execute karne ke liye dispatch karna lazmi hai
-    dispatch(fetchProducts())
+    // API Call component ke andar hi handle ho rahi hai
+    const getProducts = async () => {
+      try {
+        setIsLoading(true)
+        const res = await fetch('https://fakestoreapi.com/products?limit=6')
+        if (!res.ok) {
+          throw new Error('Failed to fetch products')
+        }
+        const data = await res.json()
+        
+        // Redux store ko updated products se update karenge
+        dispatch(setProducts(data))
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    getProducts()
   }, [dispatch])
 
   if (isLoading) return <p style={{ padding: '10px' }}>Loading products...</p>
+  if (error) return <p style={{ padding: '10px', color: 'red' }}>Error: {error}</p>
 
   return (
     <div style={{ border: '1px solid #ccc', padding: '15px', borderRadius: '8px' }}>
