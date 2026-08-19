@@ -3,7 +3,8 @@
 import { Provider } from 'react-redux'
 import { store } from '@/app/store/store'
 import { useEffect } from 'react'
-import { loadCart, setTheme } from '@/app/store/cartSlice'
+import { loadCart } from '@/app/store/cartSlice'
+import { setTheme } from '@/app/store/themeSlice'
 
 // ==========================================
 // REDUX PROVIDER WRAPPER FOR NEXT.JS SSR

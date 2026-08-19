@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import cartReducer from './cartSlice'
+import themeReducer from './themeSlice'
 
 // ==========================================
 // REDUX STORE CONFIGURATION
@@ -10,6 +11,8 @@ export const store = configureStore({
   reducer: {
     // Hamara cartSlice yahan 'cartStore' ke naam se state key banayega
     cartStore: cartReducer,
+    // Hamara themeSlice yahan 'themeStore' ke naam se state key banayega
+    themeStore: themeReducer,
   },
 })
 
@@ -17,13 +20,13 @@ export const store = configureStore({
 // PERSISTENCE (LocalStorage sync)
 // ==========================================
 // Zustand me jo hum automatic local storage persist karte the,
-// Redux me hum store.subscribe ke zariye jab bhi state change ho, cart data ko sync kar sakte hain.
+// Redux me hum store.subscribe ke zariye jab bhi state change ho, cart aur theme data ko sync kar sakte hain.
 // Hum check karenge ke environment browser ka hai (client-side) taake build error na aaye.
 if (typeof window !== 'undefined') {
   store.subscribe(() => {
     const state = store.getState()
     // Jab bhi state change hogi, cart aur theme ko local storage me save kar denge
     localStorage.setItem('shopping-cart-storage-redux', JSON.stringify(state.cartStore.cart))
-    localStorage.setItem('theme-storage-redux', state.cartStore.theme)
+    localStorage.setItem('theme-storage-redux', state.themeStore.theme)
   })
 }

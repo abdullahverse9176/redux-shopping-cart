@@ -1,14 +1,15 @@
 'use client'
 
 import { useSelector, useDispatch } from 'react-redux'
-import { removeFromCart, clearCart, toggleTheme } from '@/app/store/cartSlice'
+import { removeFromCart, clearCart } from '@/app/store/cartSlice'
+import { toggleTheme } from '@/app/store/themeSlice'
 
 export default function Cart() {
   const dispatch = useDispatch()
   
   // useSelector ke zariye state se values read kar rahe hain
   const cart = useSelector((state) => state.cartStore.cart)
-  const theme = useSelector((state) => state.cartStore.theme)
+  const theme = useSelector((state) => state.themeStore.theme)
 
   // Total Price calculate kar rahe hain
   const totalPrice = cart.reduce((total, item) => total + item.price, 0)
